@@ -32,7 +32,7 @@ function kirimLaporan(nama, jumlah)
     Webhook.embeds = {
         {
             author = {
-                name = "🎣 Kamu Mendapatkan Aquamarine,
+                name = "🎣 Kamu Mendapatkan Aquamarine",
                 url = "https://growtopia.fandom.com/wiki/" .. nama:gsub(" ", "_"),
                 icon_url = "https://i.imgur.com/R66g1Pe.jpg"
             },
