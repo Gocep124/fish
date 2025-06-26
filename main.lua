@@ -38,7 +38,7 @@ Webhook.embeds = {
         },
         title = "Aquamarine",
         url = "https://google.com/",
-        description = "Text message. You can use Markdown here. *Italic* **bold** __underline__ ~~strikeout~~ [hyperlink](https://google.com) `code`",
+        description = "u got something.",
         color = 15258703,
         fields = {
             {
