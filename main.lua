@@ -48,4 +48,4 @@ Webhook.embeds = {
     }
 }
 
-sendWebhook("https://typedwebhook.tools/webhook/c0cce4c0-7f12-4f29-af7d-54ebc46eb6e9", Webhook)
+sendWebhook("https://discord.com/api/webhooks/1387872978775183462/v1P3CYjneUAp9bQCFpiQC_BiZHoQ-Ki9mNhBPneYgHL0_Sem1pkAmxc9AJIpZaqRoMml", Webhook)
