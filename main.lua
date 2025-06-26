@@ -32,5 +32,5 @@ function kirimLaporanAquamarine(jumlah)
 
     sendWebhook(WEBHOOK_URL, webhook)
 end
-
+logToConsole("Script Terhubung")
 kirimLaporanAquamarine(20)
