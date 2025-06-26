@@ -1,3 +1,5 @@
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1031237664411762771/-wS22ZFoayD6DETIKBg9SOGUIiMMMJyzMJi_zszguCIBaqTBX-0KQjBvS8fbIRlkVD5X"
+
 function kirimLaporanAquamarine(jumlah)
     local embed = {
         title = "🎣 Laporan Mancing",
