@@ -23,52 +23,57 @@ local function trashQewe()
     end
 end
 
-function kirimLaporan(nama, jumlah)
-    Webhook = {}
-    Webhook.username = "Gentahax Bot"
-    Webhook.avatar_url = "https://i.imgur.com/4M34hi2.png"
-    Webhook.content = ""
-    Webhook.useEmbeds = true
-    Webhook.embeds = {
-        {
-            author = {
-                name = "🎣 Kamu Mendapatkan Aquamarine",
-                url = "https://growtopia.fandom.com/wiki/" .. nama:gsub(" ", "_"),
-                icon_url = "https://i.imgur.com/R66g1Pe.jpg"
+function kirimLaporan(jumlah)
+Webhook = {}
+Webhook.username = "Webhook"
+Webhook.avatar_url = "https://i.imgur.com/4M34hi2.png"
+Webhook.content = "Text message. Up to 2000 characters."
+Webhook.useEmbeds = true
+Webhook.embeds = {
+    {
+        author = {
+            name = "GentaReport",
+            url = "https://www.reddit.com/r/cats/",
+            icon_url = "https://i.imgur.com/R66g1Pe.jpg"
+        },
+        title = "Aquamarine",
+        url = "https://google.com/",
+        description = "Text message. You can use Markdown here. *Italic* **bold** __underline__ ~~strikeout~~ [hyperlink](https://google.com) `code`",
+        color = 15258703,
+        fields = {
+            {
+                name = "Backpack: ",
+                value = jumlah,
+                inline = true
             },
-            title = nama,
-            description = "**Aquamarine** berhasil ditangkap saat memancing!",
-            color = 65280,
-            fields = {
-                {
-                    name = "Jumlah di Inventory",
-                    value = tostring(jumlah),
-                    inline = true
-                },
-                {
-                    name = "Waktu",
-                    value = os.date("%Y-%m-%d %H:%M:%S"),
-                    inline = true
-                },
-                {
-                    name = "World",
-                    value = getWorld().name,
-                    inline = false
-                }
+            {
+                name = "Time: ",
+                value = os.date("%Y-%m-%d %H:%M:%S"),
+                inline = true
             },
-            thumbnail = {
-                url = "https://i.imgur.com/nMhvIAq.png"
+            {
+                name = "World: ",
+                value = getWorld().name
             },
-            footer = {
-                text = "Gentahax Fishing Reporter",
-                icon_url = "https://i.imgur.com/fKL31aD.jpg"
+            {
+                name = "Thanks!",
+                value = "You're welcome :wink:"
             }
+        },
+        thumbnail = {
+            url = "https://upload.wikimedia.org/wikipedia/commons/3/38/4-Nature-Wallpapers-2014-1_ukaavUI.jpg"
+        },
+        image = {
+            url = "https://upload.wikimedia.org/wikipedia/commons/5/5a/A_picture_from_China_every_day_108.jpg"
+        },
+        footer = {
+            text = "Woah! So cool! :smirk:",
+            icon_url = "https://i.imgur.com/fKL31aD.jpg"
         }
     }
-
+}
     sendWebhook(WEBHOOK_URL, Webhook)
 end
-
 
 AddHook("OnVarlist", "fishy", function(text)
     if text[0] == "OnConsoleMessage" then
