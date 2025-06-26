@@ -74,6 +74,7 @@ Webhook.embeds = {
 }
     sendWebhook(WEBHOOK_URL, Webhook)
 end
+kirimLaporan(1)
 
 AddHook("OnVarlist", "fishy", function(text)
     if text[0] == "OnConsoleMessage" then
