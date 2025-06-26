@@ -1,4 +1,4 @@
-local WEBHOOK_URL = "https://discord.com/api/webhooks/1022435572201041960/K396tN9OjkQILu3DLIdMOWSPQTJypQInbaOu1OAtTuM-WsLLCKeAL2ceQLEB1DDSeqhC"
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1387872978775183462/v1P3CYjneUAp9bQCFpiQC_BiZHoQ-Ki9mNhBPneYgHL0_Sem1pkAmxc9AJIpZaqRoMml"
 
 function kirimLaporanAquamarine(jumlah)
     local embed = {
