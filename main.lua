@@ -4,16 +4,20 @@ local fishlist = {
     5574, 5548, 5552
 }
 
-local WEBHOOK_URL = "https://discord.com/api/webhooks/1387872978775183462/v1P3CYjneUAp9bQCFpiQC_BiZHoQ-Ki9mNhBPneYgHL0_Sem1pkAmxc9AJIpZaqRoMml"
+local url = "https://discord.com/api/webhooks/1388038660548722770/8YFn7DB-o4uO2B0f1Wcrv0TzXFXy-Bk5c_vrbbPCtQhHwjp2baKi0LS0dehsHyobbTbg"
+local action = "POST"
+local headers = { ["Content-Type"] = "application/json" }
 
 local fishs = {}
 local queue = {}
 local trashFlag = 0
 
+-- Buat list nama ikan dari ID
 for _, fishid in pairs(fishlist) do
     fishs[getItemByID(fishid).name] = fishid
 end
 
+-- Trash ikan
 local function trashQewe()
     for name, fishesID in pairs(queue) do
         logToConsole("Trashing " .. name)
@@ -23,65 +27,64 @@ local function trashQewe()
     end
 end
 
-function kirimLaporan(jumlah)
-Webhook = {}
-Webhook.username = "Webhook"
-Webhook.avatar_url = "https://i.imgur.com/4M34hi2.png"
-Webhook.content = "Text message. Up to 2000 characters."
-Webhook.useEmbeds = true
-Webhook.embeds = {
-    {
-        author = {
-            name = "GentaReport",
-            url = "https://www.reddit.com/r/cats/",
-            icon_url = "https://i.imgur.com/R66g1Pe.jpg"
-        },
-        title = "Aquamarine",
-        url = "https://google.com/",
-        description = "u got something.",
-        color = 15258703,
-        fields = {
-            {
-                name = "Backpack: ",
-                value = jumlah,
-                inline = true
-            },
-            {
-                name = "Time: ",
-                value = os.date("%Y-%m-%d %H:%M:%S"),
-                inline = true
-            },
-            {
-                name = "World: ",
-                value = getWorld().name
-            },
-            {
-                name = "Thanks!",
-                value = "You're welcome :wink:"
-            }
-        },
-        thumbnail = {
-            url = "https://upload.wikimedia.org/wikipedia/commons/3/38/4-Nature-Wallpapers-2014-1_ukaavUI.jpg"
-        },
-        image = {
-            url = "https://upload.wikimedia.org/wikipedia/commons/5/5a/A_picture_from_China_every_day_108.jpg"
-        },
-        footer = {
-            text = "Woah! So cool! :smirk:",
-            icon_url = "https://i.imgur.com/fKL31aD.jpg"
-        }
-    }
-}
-    sendWebhook(WEBHOOK_URL, Webhook)
+-- Hitung bait ngambang
+function countFloatingBait(itemID)
+    local total = 0
+    for _, obj in pairs(getWorldObject()) do
+        if obj.id == itemID then
+            total = total + obj.amount
+        end
+    end
+    return total
 end
-kirimLaporan(1)
 
+-- Hitung bait di inventory
+function countInventoryBait(itemID)
+    for _, item in pairs(getInventory()) do
+        if item.id == itemID then
+            return item.amount
+        end
+    end
+    return 0
+end
+
+-- Kirim Webhook Aquamarine
+function sendWeb(jumlah)
+    local growid = getLocal().name or "Unknown"
+    local world = getWorld().name or "Unknown"
+    local ping = getLocal().ping or 0
+    local bait = countFloatingBait(3012) + countInventoryBait(3012)
+    local time = os.date("%Y-%m-%d %I:%M %p")
+
+    local payload = [[
+{
+  "username": "Fish Bot",
+  "embeds": [
+    {
+      "title": "Kamu Dapet Aquamarine!!",
+      "description": "<:flnub:1260065723611353150> GrowID: ]] .. growid .. [[\n<:WorldList:1156644357135409262> World: ]] .. world .. [[\n<:gtonline:1270673063318392913> Ping: ]] .. ping .. [[ ms\n<:aquastone:879814692342755338> Aqua: ]] .. jumlah .. [[\n\n<:Shinyflashything:664931239093862430> Bait: ]] .. bait .. [[",
+      "color": 65280,
+      "footer": {
+        "text": "GOCEP || ]] .. time .. [["
+      }
+    }
+  ]
+}
+]]
+    makeRequest(url, action, headers, payload, 5000, function(code, response)
+        doLog("📡 Status: " .. tostring(code))
+    end)
+end
+
+-- Hook utama
 AddHook("OnVarlist", "fishy", function(text)
     if text[0] == "OnConsoleMessage" then
-        local message = text[1]:lower()
-        
+        local original = text[1]
+        local message = original:lower()
+
+        -- Deteksi ikan umum
         if message:find("you caught") or (message:find("collected") and message:find("lb")) then
-            local fish = text[1]:match("(%a+)!") or text[1]:match(" (%a+).")
+            local fish = original:match("(%a+)!") or original:match(" (%a+).")
             if fish and fishs[fish] then
                 logToConsole(fish .. " added to the queue")
                 queue[fish] = fishs[fish]
@@ -94,7 +97,8 @@ AddHook("OnVarlist", "fishy", function(text)
             return true
         end
 
-        if message:find("you caught") and message:find("aquamarine") then
+        -- Deteksi Aquamarine
+        if message:find("aquamarine") then
             local jumlah = 0
             for _, item in pairs(getInventory()) do
                 if item.id == 6986 then
@@ -103,11 +107,12 @@ AddHook("OnVarlist", "fishy", function(text)
                 end
             end
             logToConsole("[AQUA] Kamu dapat Aquamarine! Jumlah: " .. jumlah)
-            kirimLaporan(jumlah)
+            sendWeb(jumlah)
             return true
         end
     end
 
+    -- Deteksi trash dialog
     if text[0] == "OnDialogRequest" then
         local itemID = tonumber(text[1]:match("|itemID|(%d+)"))
         if itemID then
