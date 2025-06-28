@@ -50,7 +50,7 @@ end
 
 -- Kirim Webhook Aquamarine
 function sendWeb(jumlah)
-    local growid = getLocal().name or "Unknown"
+    local growid = getLocal().name:gsub("`%d", "") or "Unknown"
     local world = getWorld().name or "Unknown"
     local ping = getLocal().ping or 0
     local bait = countFloatingBait(3012) + countInventoryBait(3012)
