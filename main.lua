@@ -50,7 +50,7 @@ end
 
 -- Kirim Webhook Aquamarine
 function sendWeb(jumlah)
-    local growid = getLocal().name:gsub("`%d", "") or "Unknown"
+    local growid = getLocal().name:gsub("`%d", ""):gsub("`+$", "") or "Unknown"
     local world = getWorld().name or "Unknown"
     local ping = getLocal().ping or 0
     local bait = countFloatingBait(3012) + countInventoryBait(3012)
@@ -62,12 +62,11 @@ function sendWeb(jumlah)
   "username": "Fish Bot",
   "embeds": [
     {
-      "content": "<@]] .. user .. [[>",
       "title": "Kamu Dapet Aquamarine!!",
       "description": "<:flnub:1260065723611353150> GrowID: ]] .. growid .. [[\n<:WorldList:1156644357135409262> World: ]] .. world .. [[\n<:gtonline:1270673063318392913> Ping: ]] .. ping .. [[ ms\n<:aquastone:879814692342755338> Aqua: ]] .. jumlah .. [[\n\n<:Shinyflashything:664931239093862430> Bait: ]] .. bait .. [[",
       "color": 65280,
       "footer": {
-        "text": "GOCEP || ]] .. time .. [["
+        "text": "<@]] .. user .. [[> | ]] .. time .. [["
       }
     }
   ]
