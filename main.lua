@@ -50,10 +50,11 @@ end
 
 -- Kirim Webhook Aquamarine
 function sendWeb(jumlah)
-    local growid = getLocal().name:gsub("`%d", "") or "Unknown"
+    local growid = getLocal().name or "Unknown"
     local world = getWorld().name or "Unknown"
     local ping = getLocal().ping or 0
     local bait = countFloatingBait(3012) + countInventoryBait(3012)
+    local user = "986952172577116182"
     local time = os.date("%Y-%m-%d %I:%M %p")
 
     local payload = [[
@@ -61,6 +62,7 @@ function sendWeb(jumlah)
   "username": "Fish Bot",
   "embeds": [
     {
+      "content": "<@]] .. user .. [[>",
       "title": "Kamu Dapet Aquamarine!!",
       "description": "<:flnub:1260065723611353150> GrowID: ]] .. growid .. [[\n<:WorldList:1156644357135409262> World: ]] .. world .. [[\n<:gtonline:1270673063318392913> Ping: ]] .. ping .. [[ ms\n<:aquastone:879814692342755338> Aqua: ]] .. jumlah .. [[\n\n<:Shinyflashything:664931239093862430> Bait: ]] .. bait .. [[",
       "color": 65280,
@@ -102,7 +104,6 @@ AddHook("OnVarlist", "fishy", function(text)
             else
                 logToConsole((fish or "??") .. " not on the list")
             end
-                return true
         end
     end
     if text[0] == "OnDialogRequest" then
@@ -115,7 +116,6 @@ AddHook("OnVarlist", "fishy", function(text)
                 logToConsole(trashFlag .. " removed from the queue")
                 queue[trashFlag], trashFlag = nil, 0
                 trashQewe()
-                    return true
             end
         end
     end
