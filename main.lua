@@ -65,7 +65,7 @@ function sendWeb(jumlah)
       "description": "<:flnub:1260065723611353150> GrowID: ]] .. growid .. [[\n<:WorldList:1156644357135409262> World: ]] .. world .. [[\n<:gtonline:1270673063318392913> Ping: ]] .. ping .. [[ ms\n<:aquastone:879814692342755338> Aqua: ]] .. jumlah .. [[\n\n<:Shinyflashything:664931239093862430> Bait: ]] .. bait .. [[",
       "color": 65280,
       "footer": {
-        "text": "<@986952172577116182> | ]] .. time .. [["
+        "text": "GOCEP | ]] .. time .. [["
       }
     }
   ]
