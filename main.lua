@@ -54,8 +54,7 @@ function sendWeb(jumlah)
     local world = getWorld().name or "Unknown"
     local ping = getLocal().ping or 0
     local bait = countFloatingBait(3012) + countInventoryBait(3012)
-    local user = "986952172577116182"
-    local time = os.date("%Y-%m-%d %I:%M %p")
+    local time = os.date("%Y-%m-%d | %I:%M %p")
 
     local payload = [[
 {
@@ -66,7 +65,7 @@ function sendWeb(jumlah)
       "description": "<:flnub:1260065723611353150> GrowID: ]] .. growid .. [[\n<:WorldList:1156644357135409262> World: ]] .. world .. [[\n<:gtonline:1270673063318392913> Ping: ]] .. ping .. [[ ms\n<:aquastone:879814692342755338> Aqua: ]] .. jumlah .. [[\n\n<:Shinyflashything:664931239093862430> Bait: ]] .. bait .. [[",
       "color": 65280,
       "footer": {
-        "text": "<@]] .. user .. [[> | ]] .. time .. [["
+        "text": "<@986952172577116182> | ]] .. time .. [["
       }
     }
   ]
