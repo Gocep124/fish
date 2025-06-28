@@ -102,6 +102,7 @@ AddHook("OnVarlist", "fishy", function(text)
             else
                 logToConsole((fish or "??") .. " not on the list")
             end
+                return true
         end
     end
     if text[0] == "OnDialogRequest" then
@@ -114,6 +115,7 @@ AddHook("OnVarlist", "fishy", function(text)
                 logToConsole(trashFlag .. " removed from the queue")
                 queue[trashFlag], trashFlag = nil, 0
                 trashQewe()
+                    return true
             end
         end
     end
