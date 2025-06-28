@@ -76,28 +76,10 @@ function sendWeb(jumlah)
     end)
 end
 
--- Hook utama
 AddHook("OnVarlist", "fishy", function(text)
     if text[0] == "OnConsoleMessage" then
         local original = text[1]
         local message = original:lower()
-
-        -- Deteksi ikan umum
-        if message:find("you caught") or (message:find("collected") and message:find("lb")) then
-            local fish = original:match("(%a+)!") or original:match(" (%a+).")
-            if fish and fishs[fish] then
-                logToConsole(fish .. " added to the queue")
-                queue[fish] = fishs[fish]
-                if trashFlag == 0 then
-                    trashQewe()
-                end
-            else
-                logToConsole((fish or "??") .. " not on the list")
-            end
-            return true
-        end
-
-        -- Deteksi Aquamarine
         if message:find("aquamarine") then
             local jumlah = 0
             for _, item in pairs(getInventory()) do
@@ -108,11 +90,20 @@ AddHook("OnVarlist", "fishy", function(text)
             end
             logToConsole("[AQUA] Kamu dapat Aquamarine! Jumlah: " .. jumlah)
             sendWeb(jumlah)
-            return true
+        end
+        if message:find("you caught") or (message:find("collected") and message:find("lb")) then
+            local fish = original:match("you caught a ([%a%s]+)!") or original:match("you caught an ([%a%s]+)!") or original:match("(%a+)!") or original:match(" (%a+).")
+            if fish and fishs[fish] then
+                logToConsole(fish .. " added to the queue")
+                queue[fish] = fishs[fish]
+                if trashFlag == 0 then
+                    trashQewe()
+                end
+            else
+                logToConsole((fish or "??") .. " not on the list")
+            end
         end
     end
-
-    -- Deteksi trash dialog
     if text[0] == "OnDialogRequest" then
         local itemID = tonumber(text[1]:match("|itemID|(%d+)"))
         if itemID then
@@ -123,7 +114,6 @@ AddHook("OnVarlist", "fishy", function(text)
                 logToConsole(trashFlag .. " removed from the queue")
                 queue[trashFlag], trashFlag = nil, 0
                 trashQewe()
-                return true
             end
         end
     end
